@@ -1,0 +1,34 @@
+.con-pro {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  align-items: start;
+  .container.projects {
+    position: relative;
+    margin: 1em;
+    top: 1em;
+    width: 30%;
+    .card {
+      img {
+        width: 100%;
+      }
+      .card-text {
+        span {
+          &.title {
+            font-size: 0.8em;
+          }
+          &.content {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+}
+
+.add-project {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  z-index: 545678654;
+}

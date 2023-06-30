@@ -3,16 +3,20 @@ import morgan from 'morgan'
 import cors from 'cors'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
-const app: Application = express()
+import path from 'path'
+
 import errHandleMiddleware from './middleware/error.handel.middleware'
 import routes from './routes/index'
 
-app.use(morgan('common'))
+const app: Application = express()
+app.use(morgan('combined'))
 app.use(express.json())
 app.use(cookieParser())
 import config from './config'
+import upload from './upload_img/index'
 const port = config.port || 3000
 
+// app.use(cors())
 app.use(
 	cors({
 		allowedHeaders: [
@@ -37,6 +41,18 @@ app.use('/api', routes)
 app.get('/healthz', (_req: Request, res: Response) => {
 	res.send({status: 'ok✌️'})
 })
+
+app.post('/upload', upload.single('image'), (req: any, res) => {
+	res.send(req.file.filename)
+})
+
+app.use('/uploads', express.static('uploads'))
+
+app.get('/image/:filename', (req, res) => {
+	const {filename} = req.params
+	res.sendFile(req.params.filename, {root: path.join(__dirname, '/uploads')})
+})
+
 app.listen(port, () => {
 	console.log(`server is start with port :${port}`)
 })

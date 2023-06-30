@@ -1,0 +1,19 @@
+.con-sp-projects {
+  .con-img {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 50vh;
+    .back {
+      height: 50vh;
+      width: 100vw;
+    }
+    .front {
+      position: absolute;
+      left: 2em;
+      bottom: 0;
+      width: 20vw;
+    }
+  }
+}

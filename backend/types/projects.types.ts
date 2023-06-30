@@ -1,5 +1,10 @@
-type projects = {
+type Projects = {
 	id?: string
+	imgback?: string
+	imgfront?: string
+	project: string
+	company: string
+	engineering: string
 	cv: string
 	owner: string
 	location: string

@@ -8,6 +8,7 @@ const pool = new Pool({
 	database: process.env.DB_DATABASE,
 	user: process.env.DB_DATABASE_USER,
 	password: process.env.DB_DATABASE_PASS,
+	max: 250,
 })
 
 pool.on('error', (error: Error) => {

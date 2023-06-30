@@ -4,22 +4,30 @@ import Projects from '../types/projects.types'
 
 class ProjectsModel {
 	//create user
-	async createProjects(b: Projects): Promise<Projects> {
+	async createProjects(pro: Projects): Promise<Projects> {
 		try {
 			//open connect with DB
 			const connect = await db.connect()
-			const sql = `INSERT INTO projects ( cv, owner, location, design, facility, payment, type, evaluation, datecreate) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *`
+			const sql = `INSERT INTO projects 
+			( imgback, imgfront, project, company, engineering, cv, owner, location, design, facility, payment, type, evaluation, datecreate)
+			 values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) 
+			 returning *`
 			//run query
 			const result = await connect.query(sql, [
-				b.cv,
-				b.owner,
-				b.location,
-				b.design,
-				b.facility,
-				b.payment,
-				b.type,
-				b.evaluation,
-				b.datecreate,
+				pro.imgback,
+				pro.imgfront,
+				pro.project,
+				pro.company,
+				pro.engineering,
+				pro.cv,
+				pro.owner,
+				pro.location,
+				pro.design,
+				pro.facility,
+				pro.payment,
+				pro.type,
+				pro.evaluation,
+				pro.datecreate,
 			])
 			//release connect
 			connect.release()
@@ -62,30 +70,33 @@ class ProjectsModel {
 		}
 	}
 	//update projects
-	async UpdateProjects(u: Projects): Promise<Projects> {
+	async UpdateProjects(pro: Projects): Promise<Projects> {
 		try {
 			//open connect with DB
 			const connect = await db.connect()
-			const sql = `UPDATE projects SET cv=$1, owner=$2,  location=$3, design=$4, facility=$5, payment=$6, type=$7, evaluation=$8, datecreate=$9  WHERE id=$10 RETURNING *`
+			const sql = `UPDATE projects SET cv=$1, owner=$2,  location=$3, design=$4, facility=$5, payment=$6, type=$7, evaluation=$8, datecreate=$9 ,project=$10, company=$11, engineering=$12  WHERE id=$13 RETURNING *`
 			//run query
 			const result = await connect.query(sql, [
-				u.cv,
-				u.owner,
-				u.location,
-				u.design,
-				u.facility,
-				u.payment,
-				u.type,
-				u.evaluation,
-				u.datecreate,
-				u.id,
+				pro.cv,
+				pro.owner,
+				pro.location,
+				pro.design,
+				pro.facility,
+				pro.payment,
+				pro.type,
+				pro.evaluation,
+				pro.datecreate,
+				pro.project,
+				pro.company,
+				pro.engineering,
+				pro.id,
 			])
 			//release connect
 			connect.release()
 			//return created user
 			return result.rows[0]
 		} catch (err) {
-			throw new Error(`could not update  projects ${u.name}, ${err}`)
+			throw new Error(`could not update  projects ${pro.id}, ${err}`)
 		}
 	}
 	//delete projects
